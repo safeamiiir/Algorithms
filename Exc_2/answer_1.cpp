@@ -1,39 +1,68 @@
 #include <bits/stdc++.h>
-#include <ext/pb_ds/tree_policy.hpp>
-#include <ext/pb_ds/assoc_container.hpp>
-
 using namespace std;
-using namespace __gnu_pbds;
-
-typedef
-tree<
-	pair<int, int>,
-	null_type,
-	less<pair<int, int>>,
-	rb_tree_tag,
-	tree_order_statistics_node_update>
-ordered_set;
-
+typedef long long ll;
+ll answer = 0;
+vector<pair<int, int>> mergesort(vector<pair<int, int>>& arr) {
+	int n = arr.size();
+	if(n == 1) {
+		return arr;
+	}
+	
+	int mid = n/2;
+	vector<pair<int, int>> left, right;
+	for(int i = 0; i < mid; i++) {
+		left.push_back(arr[i]);
+	}
+	
+	for(int i = mid; i < n; i++) {
+		right.push_back(arr[i]);
+	}
+	
+	left = mergesort(left);
+	right = mergesort(right);
+	
+	vector<ll> pre = {right.back().first};
+	int sz = right.size();
+	for(int i = sz-2; i >= 0; i--) {
+		pre.push_back(pre.back() + right[i].first);
+	}
+	
+	arr.clear();
+	int i = 0, j = 0;
+	while(i < (int) left.size() && j < (int) right.size()) {
+		int v_i = left[i].second;
+		int v_j = right[j].second;
+		if(v_i <= v_j) {
+			int m = pre.size();
+			ll all = pre.back();
+			answer += all - ll(m)*ll(left[i].first);
+			arr.push_back(left[i++]);
+		} else {
+			arr.push_back(right[j++]);
+			pre.pop_back();
+		}
+	}
+	while(i < (int) left.size()) {
+		arr.push_back(left[i++]);
+	}
+	while(j < (int) right.size()) {
+		arr.push_back(right[j++]);
+	}
+	return arr;
+}
 int main() {
-	int number;
-	cin >> number;
-	vector<pair<int, int>> p(number);
-	for (auto &pnt : p) cin >> pnt.first;
-	for (auto &pnt : p) cin >> pnt.second;
-	sort(p.begin(), p.end());
-	ordered_set s;
-	long long answer = 0;
-	for(int i = 0; i < number; ++i) {
-		int counter = s.order_of_key(make_pair(p[i].second + 1, -1));
-		answer += counter * 1ll * p[i].first;
-		s.insert(make_pair(p[i].second, i));
+	cin.tie(0);
+	int n;
+	cin >> n;
+	vector<pair<int, int>> arr(n);
+	for(int i = 0; i < n; i++) {
+		cin >> arr[i].first;
 	}
-	s.clear();
-	for(int i = number - 1; i >= 0; --i) {
-		int counter = int(s.size()) - s.order_of_key(make_pair(p[i].second - 1, number));
-		answer -= counter * 1ll * p[i].first;
-		s.insert(make_pair(p[i].second, i));
+	for(int i = 0; i < n; i++) {
+		cin >> arr[i].second;
 	}
+	sort(arr.begin(), arr.end());
+	arr = mergesort(arr);
 	cout << answer << endl;
 	return 0;
 }
