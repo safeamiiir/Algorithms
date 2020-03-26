@@ -32,9 +32,9 @@ def localMax(tree):
             return tree.val
         else:
             if(tree.right.val < tree.left.val):
-                return localMax(tree.right)
-            else:
                 return localMax(tree.left)
+            else:
+                return localMax(tree.right)
     else:
         return tree.val
 
