@@ -28,7 +28,7 @@ def insertLevelOrder(arr, root, i, n):
 #Find Local Maximum
 def localMax(tree):
     if(tree.right is not None and tree.left is not None):
-        if(tree.val > tree.right.val and tree.val > tree.left.val and tree.val > tree.left.parent ):
+        if(tree.val > tree.right.val and tree.val > tree.left.val and tree.val > tree.parent ): #### tree.left.parent => tree.parent ####
             return tree.val
         else:
             if(tree.right.val < tree.left.val):

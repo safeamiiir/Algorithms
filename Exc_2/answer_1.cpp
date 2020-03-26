@@ -2,7 +2,7 @@
 using namespace std;
 typedef long long ll;
 ll answer = 0;
-vector<pair<int, int>> mergesort(vector<pair<int, int>>& arr) {
+vector<pair<int, int>> f(vector<pair<int, int>>& arr) {
 	int n = arr.size();
 	if(n == 1) {
 		return arr;
@@ -56,6 +56,7 @@ int main() {
 	cin >> n;
 	vector<pair<int, int>> arr(n);
 	for(int i = 0; i < n; i++) {
+		
 		cin >> arr[i].first;
 	}
 	for(int i = 0; i < n; i++) {
