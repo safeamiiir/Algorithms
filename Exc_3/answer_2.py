@@ -1,20 +1,40 @@
-def printLogestIncSubArr( arr, n) : 
-	m = 1
-	l = 1
-	maxIndex = 0	
-	for i in range(1, n) : 
-		if (arr[i] > arr[i-1]) : 
-			l =l + 1
-		else : 
-			if (m < l) : 
-				m = l 
-				maxIndex = i - m 
-			l = 1	
-	if (m < l) : 
-		m = l 
-		maxIndex = n - m 
-	for i in range(maxIndex, (m+maxIndex)):
-		print(arr[i]) 
+out = []
+def count(arr: list, size: int):
+    for i in range(size): 
+        out.append(arr[i])
+    print(out)
+	
+
+def printLBS(arr: list, n: int):  
+    LIS = [0] * n 
+    for i in range(n): 
+        LIS[i] = [] 
+    LIS[0].append(arr[0]) 
+    for i in range(1, n): 
+        for j in range(i):   
+            if ((arr[j] < arr[i]) and (len(LIS[j]) > len(LIS[i]))): 
+                LIS[i] = LIS[j].copy()   
+        LIS[i].append(arr[i]) 
+    LDS = [0] * n 
+    for i in range(n): 
+        LDS[i] = []   
+    LDS[n - 1].append(arr[n - 1])   
+    for i in range(n - 2, -1, -1):   
+        for j in range(n - 1, i, -1):   
+            if ((arr[j] < arr[i]) and (len(LDS[j]) > len(LDS[i]))): 
+                LDS[i] = LDS[j].copy()   
+        LDS[i].append(arr[i])   
+    for i in range(n): 
+        LDS[i] = list(reversed(LDS[i]))   
+    max = 0
+    maxIndex = -1  
+    for i in range(n):   
+        if (len(LIS[i]) + len(LDS[i]) - 1 > max):   
+            max = len(LIS[i]) + len(LDS[i]) - 1
+            maxIndex = i   
+    count(LIS[maxIndex], len(LIS[maxIndex]) - 1)   
+    count(LDS[maxIndex], len(LDS[maxIndex]))   
+
 arr = [5, 1, 9, 2, 3, 6, 2] 
-n = len(arr) 
-printLogestIncSubArr(arr, n)
+n = len(arr)   
+printLBS(arr, n) 
