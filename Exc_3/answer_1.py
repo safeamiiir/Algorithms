@@ -7,11 +7,11 @@ while( len(right) > 0 ):
     minimum = [index for index, value in enumerate(right) if value == min(right)][0]
     for itemIndex in range(minimum+1):
         left.append(right.pop(0)) # We initialized left and right arrays
-    if( len(right) > 0 ):
-        if(max(left) > min(right) ):
-            maximum = [index for index, value in enumerate(right) if value == min(right)][0]
-            for index in range(maximum+1):
-                left.append(right.pop(0))
+    if( len(right) > 0 ):  
+        while(max(left) > min(right) ):
+            minimum = [index for index, value in enumerate(right) if value == min(right)][0]
+            for index in range(minimum+1):
+                left.append(right.pop(0))             
     else:
         break
 print(blocks)
