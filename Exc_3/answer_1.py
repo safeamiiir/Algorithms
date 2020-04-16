@@ -4,11 +4,11 @@ blocks = 0
 while( len(right) > 0 ):
     left = []
     blocks += 1
-    minimum = [index for index, value in enumerate(right) if value == min(right)][0]
+    minimum = right.index(min(right))
     for itemIndex in range(minimum + 1):
         left.append(right.pop(0)) # We initialized left and right arrays
     while(len(right) > 0 and max(left) > min(right) ):
-        minimum = [index for index, value in enumerate(right) if value == min(right)][0]
+        minimum = right.index(min(right))
         for index in range(minimum + 1):
             left.append(right.pop(0))             
 print(blocks)
