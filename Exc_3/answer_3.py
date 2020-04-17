@@ -1,12 +1,6 @@
 numOfCases, numOfKeys, numOfBalls = [int(tower) for tower in input().split()]
 keysPosition = [int(tower) for tower in input().split()]
 ballsPosition = [int(tower) for tower in input().split()]
-print('numOfCases: ', numOfCases)
-print('numOfKeys: ', numOfKeys)
-print('numOfBalls: ', numOfBalls)
-print('keysPosition: ', keysPosition)
-print('ballsPosition: ', ballsPosition)
-print('-_-_-_-_-_-_-_-_-_-_-')
 pointedArr = []
 maxDistance = 0
 
@@ -33,7 +27,6 @@ for index in range(numOfCases): # Change pointedArr which should be 0
         else:   
             pointedArr[index] = 1
         keysPosition.pop(0) # Pop element
-print('pointedArr:', pointedArr)
 
 # Find range of keys
 # if start == end  ==> it has only one key!
@@ -65,19 +58,11 @@ for index in range(startOfKeys):
         firstOnes = startOfKeys - index
         break
 
-print('-_-_-_-_-_-_-_-_-_-_-')
 #Find from start to first element
 lastOnes = 0
 for index in range(endOfKeys + 1, numOfCases):
-    print('index in endOfKeys: ', index)
     if(pointedArr[index] == 0 or pointedArr[index] == 2):
         lastOnes = index - endOfKeys
-print('start balls range: ', firstOnes)
-print('end balls range: ', lastOnes)
-print('-_-_-_-_-_-_-_-_-_-_-')
-print('startOfKeys: ', startOfKeys)
-print('endOfKeys: ', endOfKeys)
-print('maxDistance: ', maxDistance)
 
 ####### ANSWERS #######
 #handle if we only have one key or not!
@@ -91,11 +76,9 @@ if (startOfKeys == endOfKeys):
             endIndexFlag = True
         if((pointedArr[index] == 0 or pointedArr[index] == 1 or pointedArr[index] == 2) and endIndexFlag):
             tempEndIndex = index
-    print('tempStartIndex:', tempStartIndex)
-    print('tempEndIndex:', tempEndIndex)
-    print('answer: ', tempEndIndex - tempStartIndex + 1)
+    print(tempEndIndex - tempStartIndex + 1)
 else:
     if(pointedArr[startOfKeys] == 2 and pointedArr[endOfKeys] == 2):
-        print('answer: ',  (endOfKeys - startOfKeys + 1) - maxDistance + firstOnes + lastOnes + 1)
+        print((endOfKeys - startOfKeys + 1) - maxDistance + firstOnes + lastOnes + 1)
     else:
-        print('answer: ',  (endOfKeys - startOfKeys + 1) - maxDistance + firstOnes + lastOnes)        
+        print((endOfKeys - startOfKeys + 1) - maxDistance + firstOnes + lastOnes)
