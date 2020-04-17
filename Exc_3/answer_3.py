@@ -23,23 +23,19 @@ for index in range(numOfCases):
 bothFlag = '_'
 for index in range(numOfCases): # Change pointedArr which should be 0
     if(len(ballsPosition) and index == ballsPosition[0] - 1):
-        print('index ', index, ' in elif ballsPosition')
         bothFlag = index
         ballsPosition.pop(0) # Pop element
         pointedArr[index] = 0
     if(len(keysPosition) and index == keysPosition[0] - 1):
-        print('index ', index, ' in elif keysPosition')
         if(bothFlag == index):
-            print('Both ', bothFlag + 1)
             bothFlag = '_'
             pointedArr[index] = 2
         else:   
             pointedArr[index] = 1
         keysPosition.pop(0) # Pop element
-print('-_-_-_-_-_-_-_-_-_-_-')
 print('pointedArr:', pointedArr)
 
-# Find range of keys    
+# Find range of keys
 # if start == end  ==> it has only one key!
 startOfKeys = -1
 endOfKeys = -1
@@ -54,21 +50,41 @@ for index in range(numOfCases):
         endOfKeys = index
 
 
-tempIndex = 0
-for index in range(1, numOfCases):
-    newDistance = index - tempIndex - 1
+tempIndex = startOfKeys
+for index in range(startOfKeys + 1, endOfKeys + 1):
+    newDistance = index - tempIndex
     if(pointedArr[index] == 0 or pointedArr[index] == 1 or pointedArr[index] == 2):
         if(newDistance > maxDistance):
-            maxDistance = newDistance    
+            maxDistance = newDistance
         tempIndex = index
 
-        
+#Find from start to first element
+firstOnes = 0
+for index in range(startOfKeys):
+    if(pointedArr[index] == 0 or pointedArr[index] == 2):
+        firstOnes = startOfKeys - index
+        break
+
+print('-_-_-_-_-_-_-_-_-_-_-')
+#Find from start to first element
+lastOnes = 0
+for index in range(endOfKeys + 1, numOfCases):
+    print('index in endOfKeys: ', index)
+    if(pointedArr[index] == 0 or pointedArr[index] == 2):
+        lastOnes = index - endOfKeys
+
+print('start balls range: ', firstOnes)
+print('end balls range: ', lastOnes)
 print('-_-_-_-_-_-_-_-_-_-_-')
 print('startOfKeys: ', startOfKeys)
 print('endOfKeys: ', endOfKeys)
 print('maxDistance: ', maxDistance)
+
 #handle if we only have one key or not!
 if (startOfKeys == endOfKeys):
-    print('answer: ',  numOfCases - maxDistance)
-else:    
-    print('answer: ',  (endOfKeys - startOfKeys + 1) - maxDistance)
+    print('answer: IT IS WITH ONE KEY CASE')
+else:
+    if(pointedArr[startOfKeys] == 2 and pointedArr[endOfKeys] == 2):
+        print('answer: ',  (endOfKeys - startOfKeys + 1) - maxDistance + firstOnes + lastOnes + 1)
+    else:
+        print('answer: ',  (endOfKeys - startOfKeys + 1) - maxDistance + firstOnes + lastOnes)        
