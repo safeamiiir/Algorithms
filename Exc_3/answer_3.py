@@ -49,7 +49,7 @@ for index in range(numOfCases):
     if( (pointedArr[index] == 1 or pointedArr[index] == 2) and endFlag):
         endOfKeys = index
 
-
+#Calculates max distance
 tempIndex = startOfKeys
 for index in range(startOfKeys + 1, endOfKeys + 1):
     newDistance = index - tempIndex
@@ -72,7 +72,6 @@ for index in range(endOfKeys + 1, numOfCases):
     print('index in endOfKeys: ', index)
     if(pointedArr[index] == 0 or pointedArr[index] == 2):
         lastOnes = index - endOfKeys
-
 print('start balls range: ', firstOnes)
 print('end balls range: ', lastOnes)
 print('-_-_-_-_-_-_-_-_-_-_-')
@@ -80,15 +79,21 @@ print('startOfKeys: ', startOfKeys)
 print('endOfKeys: ', endOfKeys)
 print('maxDistance: ', maxDistance)
 
+####### ANSWERS #######
 #handle if we only have one key or not!
-ansForOne = 0
+tempStartIndex = 0
+tempEndIndex = 0
+endIndexFlag = False
 if (startOfKeys == endOfKeys):
     for index in range(numOfCases):
-        if(pointedArr[index] == 0 or pointedArr[index] == 2):
-            if(abs(index - startOfKeys) + 1 > ansForOne):
-                ansForOne = abs(index - startOfKeys) + 1
-    print('answer: IT IS WITH ONE KEY CASE')
-    print('ansForOne:', ansForOne)                
+        if((pointedArr[index] == 0 or pointedArr[index] == 1 or pointedArr[index] == 2) and not endIndexFlag):
+            tempStartIndex = index
+            endIndexFlag = True
+        if((pointedArr[index] == 0 or pointedArr[index] == 1 or pointedArr[index] == 2) and endIndexFlag):
+            tempEndIndex = index
+    print('tempStartIndex:', tempStartIndex)
+    print('tempEndIndex:', tempEndIndex)
+    print('answer: ', tempEndIndex - tempStartIndex + 1)
 else:
     if(pointedArr[startOfKeys] == 2 and pointedArr[endOfKeys] == 2):
         print('answer: ',  (endOfKeys - startOfKeys + 1) - maxDistance + firstOnes + lastOnes + 1)
