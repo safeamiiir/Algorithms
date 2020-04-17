@@ -81,8 +81,14 @@ print('endOfKeys: ', endOfKeys)
 print('maxDistance: ', maxDistance)
 
 #handle if we only have one key or not!
+ansForOne = 0
 if (startOfKeys == endOfKeys):
+    for index in range(numOfCases):
+        if(pointedArr[index] == 0 or pointedArr[index] == 2):
+            if(abs(index - startOfKeys) + 1 > ansForOne):
+                ansForOne = abs(index - startOfKeys) + 1
     print('answer: IT IS WITH ONE KEY CASE')
+    print('ansForOne:', ansForOne)                
 else:
     if(pointedArr[startOfKeys] == 2 and pointedArr[endOfKeys] == 2):
         print('answer: ',  (endOfKeys - startOfKeys + 1) - maxDistance + firstOnes + lastOnes + 1)
