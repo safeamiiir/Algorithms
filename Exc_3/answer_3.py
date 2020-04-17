@@ -10,34 +10,43 @@ print('-_-_-_-_-_-_-_-_-_-_-')
 pointedArr = []
 maxDistance = 0
 
+# Initialize pointedArr with -1
 for index in range(numOfCases):
-    if( len(ballsPosition) and len(keysPosition) and index == ballsPosition[0] and index == keysPosition[0]):
-        print('index ', index, ' in if')
-        ballsPosition.pop(0)
-        keysPosition.pop(0)
-        pointedArr.append(0)
-    elif( len(ballsPosition) and index == ballsPosition[0] - 1):
-        print('index ', index, ' in elif')
-        ballsPosition.pop(0)
-        pointedArr.append(0)
-    elif(len(keysPosition) and index == keysPosition[0] - 1):
-        print('index ', index, ' in elif')
-        keysPosition.pop(0)
-        pointedArr.append(0)
-    else:
-        print('index ', index, ' in else')
-        pointedArr.append(-1)
+    pointedArr.append(-1)
+
+'''
+-1 => Empty
+ 0 =>  Ball
+ 1 =>  Key
+ 2 =>  Ball and Key
+'''
+bothFlag = '_'
+for index in range(numOfCases): # Change pointedArr which should be 0
+    if(len(ballsPosition) and index == ballsPosition[0] - 1):
+        print('index ', index, ' in elif ballsPosition')
+        bothFlag = index
+        ballsPosition.pop(0) # Pop element
+        pointedArr[index] = 0
+    if(len(keysPosition) and index == keysPosition[0] - 1):
+        print('index ', index, ' in elif keysPosition')
+        if(bothFlag == index):
+            print('Both ', bothFlag + 1)
+            bothFlag = '_'
+            pointedArr[index] = 2
+        else:   
+            pointedArr[index] = 1
+        keysPosition.pop(0) # Pop element
 print('-_-_-_-_-_-_-_-_-_-_-')
 print('pointedArr:', pointedArr)
         
-tempIndex = 0        
-for index in range(1, numOfCases):
-    newDistance = index - tempIndex
-    if(pointedArr[index] == 0):
-        if(newDistance > maxDistance):
-            maxDistance = newDistance    
-        tempIndex = index
+# tempIndex = 0        
+# for index in range(1, numOfCases):
+#     newDistance = index - tempIndex
+#     if(pointedArr[index] == 0 ):
+#         if(newDistance > maxDistance and newDistance > 1):
+#             maxDistance = newDistance    
+#         tempIndex = index
         
-print('-_-_-_-_-_-_-_-_-_-_-')
-print('maxDistance: ', maxDistance)
-print('answer: ',  numOfCases- maxDistance)
+# print('-_-_-_-_-_-_-_-_-_-_-')
+# print('maxDistance: ', maxDistance)
+# print('answer: ',  numOfCases- maxDistance)
