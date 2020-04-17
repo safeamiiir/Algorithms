@@ -1,31 +1,30 @@
-n = int(input())
-l = list(map(int, input().split()))
-ans = 1
-if n == 1:
-    print(ans)
+_ = int(input())
+sequence = list(map(int, input().split()))
+size = len(sequence)
+answer = 1
+if size == 1:
+    print(answer)
 else:
-    a = l[0]
-    flag = True   # find next large element
-    for i in range(1, n):
-        if l[i] > a:
-            a = l[i]
-            ans += 1
+    a = sequence[0]
+    flag = True
+    for i in range(1, size):
+        if sequence[i] > a:
+            a = sequence[i]
+            answer += 1
             flag = False
             break
-        if l[i] < a:
-            a = l[i]
+        if sequence[i] < a:
+            a = sequence[i]
             flag = True
-            if(ans > 1):
-                ans += 1
             break
-    for j in range(i, n):
+    for j in range(i, size):
         if flag == True:
-            if l[j] > a:
-                ans += 1
+            if sequence[j] > a:
+                answer += 1
                 flag = False
         else:
-            if l[j] < a:
-                ans += 1
+            if sequence[j] < a:
+                answer += 1
                 flag = True
-        a = l[j]
-    print(ans)
+        a = sequence[j]
+    print(answer)
