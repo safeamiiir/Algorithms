@@ -15,7 +15,7 @@ for index in range(numOfCases):
     pointedArr.append(-1)
 
 '''
--1 => Empty
+-1 =>  Empty
  0 =>  Ball
  1 =>  Key
  2 =>  Ball and Key
@@ -38,15 +38,37 @@ for index in range(numOfCases): # Change pointedArr which should be 0
         keysPosition.pop(0) # Pop element
 print('-_-_-_-_-_-_-_-_-_-_-')
 print('pointedArr:', pointedArr)
+
+# Find range of keys    
+# if start == end  ==> it has only one key!
+startOfKeys = -1
+endOfKeys = -1
+endFlag = False
+for index in range(numOfCases):
+    #set index of start of the key
+    if( (pointedArr[index] == 1 or pointedArr[index] == 2) and not endFlag):
+        startOfKeys = index
+        endFlag = True
+    #set index of end of the key
+    if( (pointedArr[index] == 1 or pointedArr[index] == 2) and endFlag):
+        endOfKeys = index
+
+
+tempIndex = 0
+for index in range(1, numOfCases):
+    newDistance = index - tempIndex - 1
+    if(pointedArr[index] == 0 or pointedArr[index] == 1 or pointedArr[index] == 2):
+        if(newDistance > maxDistance):
+            maxDistance = newDistance    
+        tempIndex = index
+
         
-# tempIndex = 0        
-# for index in range(1, numOfCases):
-#     newDistance = index - tempIndex
-#     if(pointedArr[index] == 0 ):
-#         if(newDistance > maxDistance and newDistance > 1):
-#             maxDistance = newDistance    
-#         tempIndex = index
-        
-# print('-_-_-_-_-_-_-_-_-_-_-')
-# print('maxDistance: ', maxDistance)
-# print('answer: ',  numOfCases- maxDistance)
+print('-_-_-_-_-_-_-_-_-_-_-')
+print('startOfKeys: ', startOfKeys)
+print('endOfKeys: ', endOfKeys)
+print('maxDistance: ', maxDistance)
+#handle if we only have one key or not!
+if (startOfKeys == endOfKeys):
+    print('answer: ',  numOfCases - maxDistance)
+else:    
+    print('answer: ',  (endOfKeys - startOfKeys + 1) - maxDistance)
