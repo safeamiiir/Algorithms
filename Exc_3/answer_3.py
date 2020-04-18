@@ -1,8 +1,13 @@
 numOfCases, numOfKeys, numOfBalls = [int(tower) for tower in input().split()]
 keysPosition = [int(tower) for tower in input().split()]
 ballsPosition = [int(tower) for tower in input().split()]
+print('numOfCases: ', numOfCases)
+print('numOfKeys: ', numOfKeys)
+print('numOfBalls: ', numOfBalls)
+print('keysPosition: ', keysPosition)
+print('ballsPosition: ', ballsPosition)
+print('-_-_-_-_-_-_-_-_-_-_-')
 pointedArr = []
-maxDistance = 0
 
 # Initialize pointedArr with -1
 for index in range(numOfCases):
@@ -27,6 +32,7 @@ for index in range(numOfCases): # Change pointedArr which should be 0
         else:   
             pointedArr[index] = 1
         keysPosition.pop(0) # Pop element
+print('pointedArr:', pointedArr)
 
 # Find range of keys
 # if start == end  ==> it has only one key!
@@ -44,12 +50,49 @@ for index in range(numOfCases):
 
 #Calculates max distance
 tempIndex = startOfKeys
+maxDistance = 0
+maxBallBallDistance = 0
+maxKeyKeyDistance = 0
+totalDistance = 0
+startKeyFlag = False
 for index in range(startOfKeys + 1, endOfKeys + 1):
     newDistance = index - tempIndex
-    if(pointedArr[index] == 0 or pointedArr[index] == 1 or pointedArr[index] == 2):
+    if( (pointedArr[tempIndex] == 0 or pointedArr[tempIndex] == 2) and (pointedArr[index] == 0 or pointedArr[index] == 2) ): # ball - ball
+        print('in ball - ball')
+        print('tempIndex: ', tempIndex + 1)
+        print('index: ', index + 1)
+        if(newDistance - 1 > maxBallBallDistance):
+            maxBallBallDistance = newDistance
+            totalDistance += maxBallBallDistance
+    if( (pointedArr[tempIndex] == 1 or pointedArr[tempIndex] == 2) and (pointedArr[index] == 0 or pointedArr[index] == 2) and pointedArr[startOfKeys] != 2 ): # key - ball
+        print('in key - ball')
+        print('tempIndex: ', tempIndex + 1)
+        print('index: ', index + 1)
+        startKeyFlag = True
         if(newDistance > maxDistance):
             maxDistance = newDistance
-        tempIndex = index
+    if( (pointedArr[tempIndex] == 0 or pointedArr[tempIndex] == 2) and (pointedArr[index] == 1 or pointedArr[index] == 2) and pointedArr[endOfKeys] != 2 and startKeyFlag): # ball - key
+        print('in ball - key')
+        print('tempIndex: ', tempIndex + 1)
+        print('index: ', index + 1)
+        if(newDistance > maxDistance):
+            maxDistance = newDistance
+        totalDistance += maxDistance
+        maxDistance = 0
+    if( (pointedArr[tempIndex] == 1 or pointedArr[tempIndex] == 2) and (pointedArr[index] == 1 or pointedArr[index] == 2) ): # key - key
+        print('in key - key')
+        print('tempIndex: ', tempIndex + 1)
+        print('index: ', index + 1)
+        if(newDistance > maxKeyKeyDistance):
+            maxKeyKeyDistance = newDistance
+            totalDistance += maxKeyKeyDistance
+    if( (pointedArr[tempIndex] == 0 or pointedArr[tempIndex] == 1 or pointedArr[tempIndex] == 2) and (pointedArr[index] == 0 or pointedArr[index] == 1 or pointedArr[index] == 2)):
+        tempIndex = index # renew indexes
+    maxBallBallDistance = 0
+    maxKeyKeyDistance = 0
+    print('-------------')
+    print('totalDistance: ', totalDistance)
+    print('-------------')
 
 #Find from start to first element
 firstOnes = 0
@@ -58,11 +101,19 @@ for index in range(startOfKeys):
         firstOnes = startOfKeys - index
         break
 
+print('-_-_-_-_-_-_-_-_-_-_-')
 #Find from start to first element
 lastOnes = 0
 for index in range(endOfKeys + 1, numOfCases):
+    print('index in endOfKeys: ', index)
     if(pointedArr[index] == 0 or pointedArr[index] == 2):
         lastOnes = index - endOfKeys
+print('start balls range: ', firstOnes)
+print('end balls range: ', lastOnes)
+print('-_-_-_-_-_-_-_-_-_-_-')
+print('startOfKeys: ', startOfKeys)
+print('endOfKeys: ', endOfKeys)
+print('maxDistance: ', maxDistance)
 
 ####### ANSWERS #######
 #handle if we only have one key or not!
@@ -76,9 +127,11 @@ if (startOfKeys == endOfKeys):
             endIndexFlag = True
         if((pointedArr[index] == 0 or pointedArr[index] == 1 or pointedArr[index] == 2) and endIndexFlag):
             tempEndIndex = index
-    print(tempEndIndex - tempStartIndex + 1)
+    print('tempStartIndex:', tempStartIndex)
+    print('tempEndIndex:', tempEndIndex)
+    print('answer1: ', tempEndIndex - tempStartIndex + 1)
 else:
-    if(pointedArr[startOfKeys] == 2 and pointedArr[endOfKeys] == 2):
-        print((endOfKeys - startOfKeys + 1) - maxDistance + firstOnes + lastOnes + 1)
+    if(lastOnes or firstOnes):
+        print('answer2: ',  (endOfKeys - startOfKeys + 1) - totalDistance + firstOnes + lastOnes + 1)
     else:
-        print((endOfKeys - startOfKeys + 1) - maxDistance + firstOnes + lastOnes)
+        print('answer2: ',  (endOfKeys - startOfKeys + 1) - totalDistance + firstOnes + lastOnes)
